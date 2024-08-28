@@ -1,29 +1,16 @@
-from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework import permissions
 import random
 import uuid
 from faker import Faker
 import logging
 from .serializers import TransactionSerializer
+from .user_roles import get_user_roles
 
 logger = logging.getLogger(__name__)
 fake = Faker() # initialize Faker
 
-USER_ROLES = {
-    "b4d3658f-8c48-4e63-9f77": ["admin"],
-    "f2d9e912-df15-4d5e-9c7d": ["user"],
-    "92d9e13e-9d4d-4a91-8e3d": ["superuser"],
-    "e1c4b3f7-9a8c-4d8b-99f0": ["editor"],
-    "9f6e72c3-40c8-42cb-bf2a": ["viewer"],
-    "5e86355d-9e89-4a67-9f28": ["admin", "user"],
-    "21d7f3c8-b9ae-485e-964e": ["editor", "viewer"]
-}
-
-def get_user_roles(user_id):
-    return USER_ROLES.get(user_id, [])
 
 def create_dummy_transaction():
     """Creates a dummy transaction using Faker."""
@@ -43,7 +30,7 @@ class GetDetails(APIView):
 
         logger.info(f"GetDetails request by user_id: {user_id} with roles: {user_roles}")
 
-        if 'admin' in user_roles or 'user' in user_roles:
+        if 'admin' in user_roles or 'user' in user_roles or 'superuser' in user_roles:
             transaction = create_dummy_transaction()
             return Response(transaction, status=status.HTTP_200_OK)
         else:
@@ -56,7 +43,7 @@ class SaveDetaile(APIView):
         
         logger.info(f"SaveDetails request by user_id: {user_id} with roles: {user_roles}")
 
-        if 'admin' in user_roles:
+        if 'admin' in user_roles or 'superuser' in user_roles:
             transaction = {
                 "transaction_id": request.data.get('transaction_id'),  
                 "date_time": request.data.get('date_time'), 
