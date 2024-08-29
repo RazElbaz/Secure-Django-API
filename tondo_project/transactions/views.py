@@ -1,7 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from faker import Faker
 import logging
 from .serializers import TransactionSerializer
 from .services.cerbos_client import check_user_role
