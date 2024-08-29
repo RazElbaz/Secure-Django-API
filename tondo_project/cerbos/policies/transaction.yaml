@@ -1,0 +1,12 @@
+apiVersion: "api.cerbos.dev/v1"
+resourcePolicy:
+  resource: "transaction"
+  version: "default"
+  rules:
+    - actions: ["get_details"]
+      effect: "EFFECT_ALLOW"
+      roles: ["admin", "superuser", "user"]
+
+    - actions: ["save_details"]
+      effect: "EFFECT_ALLOW"
+      roles: ["admin", "superuser"]

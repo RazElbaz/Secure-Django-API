@@ -1,13 +1,38 @@
 version: '3.8'
 
 services:
-  web:
+  django:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - .:/app
     ports:
       - "8000:8000"
     environment:
       - DEBUG=1
-      - DJANGO_ALLOWED_HOSTS=localhost
+      - SECRET_KEY=changeme
+      - DATABASE_URL=postgres://user:password@db/mydb
+    depends_on:
+      - db
+      - cerbos
+    volumes:
+      - .:/app
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: mydb
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  cerbos:
+    image: ghcr.io/cerbos/cerbos:latest
+    command: "server --config=/config/conf.yaml" 
+    volumes:
+      - ./cerbos/policies:/policies
+      - ./cerbos/config/conf.yaml:/config/conf.yaml 
+    ports:
+      - "3592:3592"
+
+
+volumes:
+  postgres_data:
