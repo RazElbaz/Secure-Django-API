@@ -10,5 +10,3 @@ class Transaction(models.Model):
     transaction_type = models.CharField(max_length=50)
 
 
-    def __str__(self):
-        return f"Transaction {self.transaction_id} by {self.sender} to {self.receiver}"
