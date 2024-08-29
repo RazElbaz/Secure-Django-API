@@ -15,5 +15,5 @@ __pycache__/
 docker-compose.override.yml
 docker-compose.local.yml
 Dockerfile.dev
-
+tondo_project/db.sqlite3
 
