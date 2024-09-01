@@ -54,11 +54,6 @@ Saves a new transaction. Authorization is based on user roles.
 
 ## Setup
 
-### Prerequisites
-
-- Docker
-- Docker Compose
-
 ### Build and Run
 
 1. **Clone the Repository**
@@ -68,23 +63,21 @@ Saves a new transaction. Authorization is based on user roles.
    cd Secure-Django-API/tondo_project
    ```
 
-2. **Build the Docker Image**
+2.  **Build and run the Docker containers**:
 
    ```bash
-   docker-compose build
+    docker-compose up --build
    ```
+   This command will:
+    - Build the Django application Docker image.
+    - Start the PostgreSQL database, Django application, and Cerbos sidecar.
 
-3. **Start the Services**
-
-   ```bash
-   docker-compose up
-   ```
-
-4. **Database Migration**
+3. **Database Migration**
 
    In a new terminal, run:
 
    ```bash
+   cd Secure-Django-API/tondo_project
    docker-compose exec django python manage.py migrate
    ```
 
@@ -96,9 +89,21 @@ Saves a new transaction. Authorization is based on user roles.
    docker-compose down
    ```
 
+### User Roles
+
+User roles are statically defined in `services/utils.py`:
+
+```python
+USER_ROLES = {
+    "f2d9e912-df15-4d5e-9c7d": ["user"],
+    # Additional roles here
+}
+```
+
 ### Configuration
 
-- **Cerbos**: The configuration file `tondo_project/cerbos/config/conf.yaml` defines the Cerbos setup and policies.
+- **Cerbos Configuration**: Located in `cerbos/config/conf.yaml`.
+- **Cerbos Policies**: Defined in `cerbos/policies/transaction.yaml`.
 
 ## Testing
 
@@ -107,11 +112,6 @@ Run tests using Django's test suite:
 ```bash
 docker-compose run django python manage.py test
 ```
-
-## Notes
-
-- User roles are hardcoded in `tondo_project/transactions/services/user_roles.py`.
-- Ensure Cerbos policies are correctly defined in `tondo_project/cerbos/policies/transaction.yaml`.
 
 ## References
 
