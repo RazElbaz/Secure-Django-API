@@ -79,7 +79,8 @@ Saves a new transaction. Authorization is based on user roles.
    ```bash
    cd Secure-Django-API/tondo_project
    docker-compose exec django python manage.py makemigrations
-   docker-compose exec django python manage.py migrate   ```
+   docker-compose exec django python manage.py migrate   
+   ```
 
 4. **Stop and Remove Containers**
 
