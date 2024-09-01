@@ -68,9 +68,9 @@ Saves a new transaction. Authorization is based on user roles.
    ```bash
     docker-compose up --build
    ```
-   This command will:
-    - Build the Django application Docker image.
-    - Start the PostgreSQL database, Django application, and Cerbos sidecar.
+This command will:
+   - Build the Django application Docker image.
+   - Start the PostgreSQL database, Django application, and Cerbos sidecar.
 
 3. **Database Migration**
 
