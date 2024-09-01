@@ -5,9 +5,6 @@ services:
     build: .
     ports:
       - "8000:8000"
-    environment:
-      - SECRET_KEY=2n^4xy$g*dffb&3^z+7z1w!+jht=#9m!o8)c4w#4&c=1$5(1)5
-      - DATABASE_URL=postgres://user:password@db/mydb
     depends_on:
       - db
       - cerbos
@@ -31,7 +28,6 @@ services:
       - ./cerbos/config/conf.yaml:/config/conf.yaml 
     ports:
       - "3592:3592"
-
 
 volumes:
   postgres_data:
